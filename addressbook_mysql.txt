@@ -1,0 +1,200 @@
+C:\Users\Admin>mysql -u root -p
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 19
+Server version: 8.0.29 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+ MySQL  localhost:3306 ssl  SQL > show databases
+                               -> ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| payroll_service    |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.0015 sec)
+--------------------------------------------------------------------------------------------------------------------------------------
+#UC1
+#Create address book service database
+
+ MySQL  localhost:3306 ssl  SQL > create database Address_Book_Service;
+Query OK, 1 row affected (0.1429 sec)
+
+ MySQL  localhost:3306 ssl  SQL > use Address_Book_Service;
+Default schema set to `Address_Book_Service`.
+Fetching table and column names from `address_book_service` for auto-completion... Press ^C to stop.
+--------------------------------------------------------------------------------------------------------------------------------------
+#UC2
+mysql> use Address_Book_Service;
+Database changed
+mysql> create table address_book(firstName VARCHAR(30) NOT NULL,lastName VARCHAR(30) NOT NULL,address VARCHAR(50) NOT NULL,city VARCHAR(20) NOT NULL,state VARCHAR(20) NOT NULL,zip VARCHAR(10) NOT NULL,phoneNo VARCHAR(15) NOT NULL,email VARCHAR(15) NOT NULL,PRIMARY KEY (firstName));
+Query OK, 0 rows affected (2.60 sec)
+--------------------------------------------------------------------------------------------------------------------------------------
+#UC3
+mysql>insert into address_book(firstName,lastName,address,city,state,zip,phoneNo,email) values 
+("Ankita", "Patil", "Akiwat", "Kolhapur", "Maharastra","416106", "1234567891", "abc@gmail.com"),
+("Avita", "Kamte", "Nipani", "Belgum", "Karnataka", "123654", "7894561231", "xyz@gmail.com"),
+("Vardhan", "Kamte", "Kurundwad", "Shirol", "Maharastra", "123455", "7894563697","pqr@gmail.com"),
+("Darshan", "Patil", "Bagewadi", "Chikkodi", "Karnataka", "123456", "4561237895", "rst@gmail.com");
+Query OK, 4 rows affected (0.24 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> describe address_book;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| firstName | varchar(30) | NO   | PRI | NULL    |       |
+| lastName  | varchar(30) | NO   |     | NULL    |       |
+| address   | varchar(50) | NO   |     | NULL    |       |
+| city      | varchar(20) | NO   |     | NULL    |       |
+| state     | varchar(20) | NO   |     | NULL    |       |
+| zip       | varchar(10) | NO   |     | NULL    |       |
+| phoneNo   | varchar(15) | NO   |     | NULL    |       |
+| email     | varchar(15) | NO   |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+8 rows in set (0.01 sec)
+
+mysql> select * from address_book;
++-----------+----------+-----------+----------+------------+--------+------------+---------------+
+| firstName | lastName | address   | city     | state      | zip    | phoneNo    | email         |
++-----------+----------+-----------+----------+------------+--------+------------+---------------+
+| Ankita    | Patil    | Akiwat    | Kolhapur | Maharastra | 416106 | 1234567891 | abc@gmail.com |
+| Avita     | Kamte    | Nipani    | Belgum   | Karnataka  | 123654 | 7894561231 | xyz@gmail.com |
+| Darshan   | Patil    | Bagewadi  | Chikkodi | Karnataka  | 123456 | 4561237895 | rst@gmail.com |
+| Vardhan   | Kamte    | Kurundwad | Shirol   | Maharastra | 123455 | 7894563697 | pqr@gmail.com |
++-----------+----------+-----------+----------+------------+--------+------------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> update address_book set phoneNo="98765432145" where firstName="Ankita";
+Query OK, 1 row affected (0.20 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from address_book;
++-----------+----------+-----------+----------+------------+--------+-------------+---------------+
+| firstName | lastName | address   | city     | state      | zip    | phoneNo     | email         |
++-----------+----------+-----------+----------+------------+--------+-------------+---------------+
+| Ankita    | Patil    | Akiwat    | Kolhapur | Maharastra | 416106 | 98765432145 | abc@gmail.com |
+| Avita     | Kamte    | Nipani    | Belgum   | Karnataka  | 123654 | 7894561231  | xyz@gmail.com |
+| Darshan   | Patil    | Bagewadi  | Chikkodi | Karnataka  | 123456 | 4561237895  | rst@gmail.com |
+| Vardhan   | Kamte    | Kurundwad | Shirol   | Maharastra | 123455 | 7894563697  | pqr@gmail.com |
++-----------+----------+-----------+----------+------------+--------+-------------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> update address_book set email="ankita@gmail" where firstName="Ankita";
+Query OK, 1 row affected (0.18 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from address_book;
++-----------+----------+-----------+----------+------------+--------+-------------+---------------+
+| firstName | lastName | address   | city     | state      | zip    | phoneNo     | email         |
++-----------+----------+-----------+----------+------------+--------+-------------+---------------+
+| Ankita    | Patil    | Akiwat    | Kolhapur | Maharastra | 416106 | 98765432145 | ankita@gmail  |
+| Avita     | Kamte    | Nipani    | Belgum   | Karnataka  | 123654 | 7894561231  | xyz@gmail.com |
+| Darshan   | Patil    | Bagewadi  | Chikkodi | Karnataka  | 123456 | 4561237895  | rst@gmail.com |
+| Vardhan   | Kamte    | Kurundwad | Shirol   | Maharastra | 123455 | 7894563697  | pqr@gmail.com |
++-----------+----------+-----------+----------+------------+--------+-------------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> delete from address_book where firstName="Darshan";
+Query OK, 1 row affected (0.17 sec)
+
+mysql> select * from address_book;
++-----------+----------+-----------+----------+------------+--------+-------------+---------------+
+| firstName | lastName | address   | city     | state      | zip    | phoneNo     | email         |
++-----------+----------+-----------+----------+------------+--------+-------------+---------------+
+| Ankita    | Patil    | Akiwat    | Kolhapur | Maharastra | 416106 | 98765432145 | ankita@gmail  |
+| Avita     | Kamte    | Nipani    | Belgum   | Karnataka  | 123654 | 7894561231  | xyz@gmail.com |
+| Vardhan   | Kamte    | Kurundwad | Shirol   | Maharastra | 123455 | 7894563697  | pqr@gmail.com |
++-----------+----------+-----------+----------+------------+--------+-------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from address_book where city="Belgum";
++-----------+----------+---------+--------+-----------+--------+------------+---------------+
+| firstName | lastName | address | city   | state     | zip    | phoneNo    | email         |
++-----------+----------+---------+--------+-----------+--------+------------+---------------+
+| Avita     | Kamte    | Nipani  | Belgum | Karnataka | 123654 | 7894561231 | xyz@gmail.com |
++-----------+----------+---------+--------+-----------+--------+------------+---------------+
+1 row in set (0.00 sec)
+
+mysql> select * from address_book where  city="Kolhapur";
++-----------+----------+---------+----------+------------+--------+-------------+--------------+
+| firstName | lastName | address | city     | state      | zip    | phoneNo     | email        |
++-----------+----------+---------+----------+------------+--------+-------------+--------------+
+| Ankita    | Patil    | Akiwat  | Kolhapur | Maharastra | 416106 | 98765432145 | ankita@gmail |
++-----------+----------+---------+----------+------------+--------+-------------+--------------+
+1 row in set (0.00 sec)
+
+mysql> select count(city or state) from address_book;
++----------------------+
+| count(city or state) |
++----------------------+
+|                    3 |
++----------------------+
+1 row in set (0.12 sec)
+
+mysql> select firstName,city from address_book order by firstName;
++-----------+----------+
+| firstName | city     |
++-----------+----------+
+| Ankita    | Kolhapur |
+| Avita     | Belgum   |
+| Vardhan   | Shirol   |
++-----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> alter table address_book add type varchar(15) after lastName;
+Query OK, 0 rows affected (0.50 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> update address_book set type="Family" where firstName="Ankita";
+Query OK, 1 row affected (0.20 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update address_book set type="Friends" where firstName="Avita";
+Query OK, 1 row affected (0.21 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update address_book set type="Professional" where firstName="Vardhan";
+Query OK, 1 row affected (0.18 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from address_book;
++-----------+----------+--------------+-----------+----------+------------+--------+-------------+---------------+
+| firstName | lastName | type         | address   | city     | state      | zip    | phoneNo     | email         |
++-----------+----------+--------------+-----------+----------+------------+--------+-------------+---------------+
+| Ankita    | Patil    | Family       | Akiwat    | Kolhapur | Maharastra | 416106 | 98765432145 | ankita@gmail  |
+| Avita     | Kamte    | Friends      | Nipani    | Belgum   | Karnataka  | 123654 | 7894561231  | xyz@gmail.com |
+| Vardhan   | Kamte    | Professional | Kurundwad | Shirol   | Maharastra | 123455 | 7894563697  | pqr@gmail.com |
++-----------+----------+--------------+-----------+----------+------------+--------+-------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> select count(type) as Number_Of_Contact_Person from address_book;
++--------------------------+
+| Number_Of_Contact_Person |
++--------------------------+
+|                        3 |
++--------------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from address_book;
++-----------+----------+--------------+-----------+----------+------------+--------+-------------+---------------+
+| firstName | lastName | type         | address   | city     | state      | zip    | phoneNo     | email         |
++-----------+----------+--------------+-----------+----------+------------+--------+-------------+---------------+
+| Ankita    | Patil    | Family       | Akiwat    | Kolhapur | Maharastra | 416106 | 98765432145 | ankita@gmail  |
+| Avita     | Kamte    | Friends      | Nipani    | Belgum   | Karnataka  | 123654 | 7894561231  | xyz@gmail.com |
+| Vardhan   | Kamte    | Professional | Kurundwad | Shirol   | Maharastra | 123455 | 7894563697  | pqr@gmail.com |
++-----------+----------+--------------+-----------+----------+------------+--------+-------------+---------------+
+3 rows in set (0.00 sec)
